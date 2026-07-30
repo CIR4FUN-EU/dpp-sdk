@@ -1,5 +1,7 @@
 package dppsdk.dpp4fun.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -137,16 +139,16 @@ public class ProductClassification {
         }
 
         public ProductClassification build() {
-            if (sector == null || sector.isBlank()) {
+            if (ContractText.isBlank(sector)) {
                 throw new IllegalArgumentException("sector is required");
             }
-            if (category == null || category.isBlank()) {
+            if (ContractText.isBlank(category)) {
                 throw new IllegalArgumentException("category is required");
             }
-            if (group != null && group.isBlank()) {
+            if (group != null && ContractText.isBlank(group)) {
                 throw new IllegalArgumentException("group must not be blank if provided");
             }
-            if (subCategory != null && subCategory.isBlank()) {
+            if (subCategory != null && ContractText.isBlank(subCategory)) {
                 throw new IllegalArgumentException("subCategory must not be blank if provided");
             }
             return new ProductClassification(this);

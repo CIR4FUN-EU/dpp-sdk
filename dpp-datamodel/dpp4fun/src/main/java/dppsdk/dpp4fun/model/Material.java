@@ -1,5 +1,7 @@
 package dppsdk.dpp4fun.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -103,13 +105,13 @@ public class Material {
         }
 
         public Material build() {
-            if (name == null || name.isBlank()) {
+            if (ContractText.isBlank(name)) {
                 throw new IllegalArgumentException("name is required");
             }
-            if (portion < 0) {
-                throw new IllegalArgumentException("portion must be non-negative");
+            if (!Double.isFinite(portion) || portion < 0) {
+                throw new IllegalArgumentException("portion must be finite and non-negative");
             }
-            if (reference != null && reference.isBlank()) {
+            if (reference != null && ContractText.isBlank(reference)) {
                 throw new IllegalArgumentException("reference must not be blank if provided");
             }
             return new Material(this);

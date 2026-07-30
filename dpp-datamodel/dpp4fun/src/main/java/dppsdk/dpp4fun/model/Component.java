@@ -1,5 +1,7 @@
 package dppsdk.dpp4fun.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -73,10 +75,10 @@ public class Component {
         }
 
         public Component build() {
-            if (name == null || name.isBlank()) {
+            if (ContractText.isBlank(name)) {
                 throw new IllegalArgumentException("name is required");
             }
-            if (reference != null && reference.isBlank()) {
+            if (reference != null && ContractText.isBlank(reference)) {
                 throw new IllegalArgumentException("reference must not be blank if provided");
             }
             return new Component(this);

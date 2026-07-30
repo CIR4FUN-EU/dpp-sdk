@@ -175,6 +175,21 @@ Dpp4Fun mappedDpp = dppMapper.toDomain(payload);
 
 `Dpp4FunJsonCodec` maps through `Dpp4FunPayload`. Outbound JSON places `passportMetadata`, `nameplate`, and `documentation` at the top level instead of under `coreDpp`. Inbound JSON accepts either that flat transport shape or a nested `coreDpp` object. `fromJson` maps only; `fromJsonAndValidate` maps and then validates.
 
+Standalone codec input must have a JSON object root. Literal `null`, missing/empty input,
+arrays, and structurally incomplete objects fail through the mapping boundary; no successful
+codec call returns a null `Dpp4Fun`. Null members of `features` or `tags` are likewise
+structural mapping failures, while the direct semantic list validator retains its indexed
+defensive validation error.
+
+Contracted strings use the frozen Unicode White_Space set `U+0009–U+000D`, `U+0020`,
+`U+0085`, `U+00A0`, `U+1680`, `U+2000–U+200A`, `U+2028`, `U+2029`, `U+202F`,
+`U+205F`, and `U+3000`; `U+200B` remains visible. Duplicate comparison trims only
+that set and lowercases with `Locale.ROOT`.
+
+Weight, dimension values, and material portion are finite and non-negative. NaN,
+positive/negative infinity, exponent overflow, and non-interoperable JSON numeric tokens
+are rejected; finite exponent-form input remains accepted.
+
 ```java
 import dppsdk.dpp4fun.transport.Dpp4FunJsonCodec;
 

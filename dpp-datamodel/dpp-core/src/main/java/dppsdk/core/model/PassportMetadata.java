@@ -1,5 +1,7 @@
 package dppsdk.core.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,12 +137,12 @@ public class PassportMetadata {
             }
 
             // Validate qrCodeOrDigitalTag - not blank if provided
-            if (qrCodeOrDigitalTag != null && qrCodeOrDigitalTag.trim().isEmpty()) {
+            if (qrCodeOrDigitalTag != null && ContractText.isBlank(qrCodeOrDigitalTag)) {
                 throw new IllegalArgumentException("qrCodeOrDigitalTag must not be blank if provided");
             }
 
             // Validate externalDocumentationLink - not blank if provided
-            if (externalDocumentationLink != null && externalDocumentationLink.trim().isEmpty()) {
+            if (externalDocumentationLink != null && ContractText.isBlank(externalDocumentationLink)) {
                 throw new IllegalArgumentException("externalDocumentationLink must not be blank if provided");
             }
 

@@ -46,7 +46,12 @@ public class ProductClassificationMapper implements Mapper<ProductClassification
             }
 
             if (payload.getTags() != null) {
-                for (String tag : payload.getTags()) {
+                for (int index = 0; index < payload.getTags().size(); index++) {
+                    String tag = payload.getTags().get(index);
+                    if (tag == null) {
+                        throw new IllegalArgumentException(
+                                "ProductClassification.tags[" + index + "] must not be null");
+                    }
                     builder.addTag(tag);
                 }
             }

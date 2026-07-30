@@ -6,6 +6,8 @@ import dppsdk.support.TestDataFactory;
 import dppsdk.core.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -57,6 +59,24 @@ class Dpp4FunJsonCodecTest {
     }
 
     @Test
+    void fromJsonRejectsNullAndMissingRootsAsCausalMappingFailures() {
+        for (String invalidRoot : new String[] {"null", "", "[]"}) {
+            IllegalArgumentException error =
+                    assertThrows(IllegalArgumentException.class, () -> codec.fromJson(invalidRoot));
+            assertTrue(error.getMessage().contains("deserialize"));
+            assertTrue(error.getCause() instanceof IllegalArgumentException);
+            assertTrue(error.getCause().getMessage().contains("$"));
+        }
+    }
+
+    @Test
+    void fromJsonRejectsEmptyObjectAsCausalStructuralMappingFailure() {
+        MappingException error =
+                assertThrows(MappingException.class, () -> codec.fromJson("{}"));
+        assertTrue(error.getCause() instanceof IllegalArgumentException);
+    }
+
+    @Test
     void fromJsonRejectsInvalidUuidDateRoleAndMissingRequiredData() {
         Dpp4Fun domain = TestDataFactory.validDpp();
         String validJson = codec.toJson(domain);
@@ -101,6 +121,67 @@ class Dpp4FunJsonCodecTest {
                 .replace("\"productType\":\"Bed\"", "\"productType\":\"Chair\"");
 
         assertThrows(ValidationException.class, () -> codec.fromJsonAndValidate(invalidSemanticJson));
+    }
+
+    @Test
+    void fromJsonRejectsNullFeatureAsCausalIndexedMappingFailure() {
+        String invalidJson = TestDataFactory.validDppJson()
+                .replace("\"features\":[\"Feature A\",\"Feature B\"]",
+                        "\"features\":[null,\"Feature B\"]");
+
+        MappingException error =
+                assertThrows(MappingException.class, () -> codec.fromJson(invalidJson));
+
+        assertTrue(error.getMessage().contains("Characteristics.features[0]"));
+        assertTrue(error.getCause() instanceof IllegalArgumentException);
+    }
+
+    @Test
+    void fromJsonRejectsLaterNullTagAsCausalIndexedMappingFailure() {
+        String invalidJson = TestDataFactory.validDppJson()
+                .replace("\"tags\":[\"demo\"]", "\"tags\":[\"demo\",null]");
+
+        MappingException error =
+                assertThrows(MappingException.class, () -> codec.fromJsonAndValidate(invalidJson));
+
+        assertTrue(error.getMessage().contains("ProductClassification.tags[1]"));
+        assertTrue(error.getCause() instanceof IllegalArgumentException);
+    }
+
+    @Test
+    void fromJsonAcceptsFiniteExponentAndRejectsNonFiniteNumbers() {
+        String validJson = TestDataFactory.validDppJson();
+        assertEquals(
+                75.0,
+                codec.fromJson(validJson.replace("\"weight\":75.0", "\"weight\":7.5e1"))
+                        .getWeight());
+
+        for (String invalid : new String[] {"NaN", "Infinity", "-Infinity"}) {
+            IllegalArgumentException error = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> codec.fromJson(
+                            validJson.replace("\"weight\":75.0", "\"weight\":" + invalid)));
+            assertTrue(error.getCause() instanceof com.fasterxml.jackson.core.JsonProcessingException);
+        }
+        MappingException overflow = assertThrows(
+                MappingException.class,
+                () -> codec.fromJson(
+                        validJson.replace("\"weight\":75.0", "\"weight\":1e309")));
+        assertTrue(overflow.getCause() instanceof IllegalArgumentException);
+    }
+
+    @Test
+    void toJsonRejectsDefensivelyInjectedNonFiniteNumberWithCause() throws Exception {
+        Dpp4Fun dpp = TestDataFactory.validDpp();
+        Field weight = dpp.getCharacteristics().getClass().getDeclaredField("weight");
+        weight.setAccessible(true);
+        weight.set(dpp.getCharacteristics(), Double.POSITIVE_INFINITY);
+
+        IllegalArgumentException error =
+                assertThrows(IllegalArgumentException.class, () -> codec.toJson(dpp));
+
+        assertTrue(error.getCause() instanceof IllegalArgumentException);
+        assertTrue(error.getCause().getMessage().contains("Characteristics.weight"));
     }
 
     @Test

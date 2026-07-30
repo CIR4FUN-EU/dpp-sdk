@@ -1,5 +1,7 @@
 package dppsdk.core.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -146,19 +148,19 @@ public class Nameplate {
         }
 
         public Nameplate build() {
-            if (gtinCode == null || gtinCode.isBlank()) {
+            if (ContractText.isBlank(gtinCode)) {
                 throw new IllegalArgumentException("gtinCode is required");
             }
-            if (internalArticleNumber != null && internalArticleNumber.isBlank()) {
+            if (internalArticleNumber != null && ContractText.isBlank(internalArticleNumber)) {
                 throw new IllegalArgumentException("internalArticleNumber must not be blank if provided");
             }
-            if (batchNumber != null && batchNumber.isBlank()) {
+            if (batchNumber != null && ContractText.isBlank(batchNumber)) {
                 throw new IllegalArgumentException("batchNumber must not be blank if provided");
             }
-            if (customsTariffNumber != null && customsTariffNumber.isBlank()) {
+            if (customsTariffNumber != null && ContractText.isBlank(customsTariffNumber)) {
                 throw new IllegalArgumentException("customsTariffNumber must not be blank if provided");
             }
-            if (uriOfTheProduct != null && uriOfTheProduct.isBlank()) {
+            if (uriOfTheProduct != null && ContractText.isBlank(uriOfTheProduct)) {
                 throw new IllegalArgumentException("uriOfTheProduct must not be blank if provided");
             }
             return new Nameplate(this);

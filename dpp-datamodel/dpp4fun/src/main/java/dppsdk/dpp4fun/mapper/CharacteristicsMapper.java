@@ -60,7 +60,12 @@ public class CharacteristicsMapper implements Mapper<Characteristics, Characteri
             }
 
             if (payload.getFeatures() != null) {
-                for (String feature : payload.getFeatures()) {
+                for (int index = 0; index < payload.getFeatures().size(); index++) {
+                    String feature = payload.getFeatures().get(index);
+                    if (feature == null) {
+                        throw new IllegalArgumentException(
+                                "Characteristics.features[" + index + "] must not be null");
+                    }
                     builder.addFeature(feature);
                 }
             }

@@ -1,5 +1,7 @@
 package dppsdk.dpp4fun.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -104,16 +106,16 @@ public class Dimensions {
         }
 
         public Dimensions build() {
-            if (width == null || width < 0) {
-                throw new IllegalArgumentException("width must be non-negative");
+            if (width == null || !Double.isFinite(width) || width < 0) {
+                throw new IllegalArgumentException("width must be finite and non-negative");
             }
-            if (height == null || height < 0) {
-                throw new IllegalArgumentException("height must be non-negative");
+            if (height == null || !Double.isFinite(height) || height < 0) {
+                throw new IllegalArgumentException("height must be finite and non-negative");
             }
-            if (depth == null || depth < 0) {
-                throw new IllegalArgumentException("depth must be non-negative");
+            if (depth == null || !Double.isFinite(depth) || depth < 0) {
+                throw new IllegalArgumentException("depth must be finite and non-negative");
             }
-            if (unit != null && unit.isBlank()) {
+            if (unit != null && ContractText.isBlank(unit)) {
                 throw new IllegalArgumentException("unit must not be blank if provided");
             }
             return new Dimensions(this);
