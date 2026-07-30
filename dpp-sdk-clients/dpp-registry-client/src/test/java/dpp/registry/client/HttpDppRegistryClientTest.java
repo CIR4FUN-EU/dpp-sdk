@@ -19,9 +19,31 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class HttpDppRegistryClientTest {
+    @Test
+    void postNewDppToRegistryRejectsNullBeforeNetworkWithCause() throws IOException {
+        try (TestServer server = TestServer.start()) {
+            AtomicInteger hits = new AtomicInteger();
+            server.httpServer().createContext("/v1/registerDPP", exchange -> {
+                hits.incrementAndGet();
+                respond(exchange, 500, "{}");
+            });
+            DppRegistryClient client = new HttpDppRegistryClient(server.baseUrl());
+
+            DppMappingClientException ex = assertThrows(
+                    DppMappingClientException.class,
+                    () -> client.postNewDppToRegistry(null)
+            );
+
+            assertInstanceOf(IllegalArgumentException.class, ex.getCause());
+            assertEquals("request must not be null", ex.getCause().getMessage());
+            assertEquals(0, hits.get());
+        }
+    }
+
     @Test
     void postNewDppToRegistryUsesEn18222PathAndSupportedFieldNames() throws IOException {
         try (TestServer server = TestServer.start()) {
