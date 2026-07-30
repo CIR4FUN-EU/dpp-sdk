@@ -32,6 +32,26 @@ class BillOfMaterialsValidatorTest {
     }
 
     @Test
+    void validate_nullMembers_failWithStableIndexedPaths() {
+        BillOfMaterials materials = new BillOfMaterials.Builder()
+                .addMaterial(null)
+                .addMaterial(new Material.Builder().name("Steel").portion(1.0).build())
+                .build();
+        BillOfMaterials components = new BillOfMaterials.Builder()
+                .addComponent(new Component.Builder().name("Frame").build())
+                .addComponent(null)
+                .build();
+
+        ValidationException materialError =
+                assertThrows(ValidationException.class, () -> validator.validate(materials));
+        ValidationException componentError =
+                assertThrows(ValidationException.class, () -> validator.validate(components));
+
+        assertEquals("BillOfMaterials.materials[0] is null", materialError.getMessage());
+        assertEquals("BillOfMaterials.components[1] is null", componentError.getMessage());
+    }
+
+    @Test
     void validate_duplicateMaterials_fails() {
         BillOfMaterials bom = new BillOfMaterials.Builder()
                 .addMaterial(new Material.Builder().name("Steel").portion(2.0).reference("REF-1").build())
