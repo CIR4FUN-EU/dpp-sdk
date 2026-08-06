@@ -35,7 +35,7 @@ services:
 
   dpp-repo-api:
     container_name: dpp-repo-api
-    image: ${DPP_IMAGE_REGISTRY:-ghcr.io/YOUR_ORG}/${DPP_REPO_IMAGE_NAME:-dpp-repo-api}:${DPP_IMAGE_TAG:-0.5.0}
+    image: ${DPP_IMAGE_REGISTRY:-ghcr.io/YOUR_ORG}/${DPP_REPO_IMAGE_NAME:-dpp-repo-api}:${DPP_IMAGE_TAG:-0.5.1}
     build:
       context: .
       dockerfile: mock-dpp-repo/Dockerfile
@@ -54,7 +54,7 @@ services:
 
   dpp-registry-api:
     container_name: dpp-registry-api
-    image: ${DPP_IMAGE_REGISTRY:-ghcr.io/YOUR_ORG}/${DPP_REGISTRY_IMAGE_NAME:-dpp-registry-api}:${DPP_IMAGE_TAG:-0.5.0}
+    image: ${DPP_IMAGE_REGISTRY:-ghcr.io/YOUR_ORG}/${DPP_REGISTRY_IMAGE_NAME:-dpp-registry-api}:${DPP_IMAGE_TAG:-0.5.1}
     build:
       context: .
       dockerfile: mock-eu-registry/Dockerfile

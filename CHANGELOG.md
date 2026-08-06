@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 No unreleased changes.
 
+## [0.5.1] - 2026-08-06
+
+### Fixed
+
+- Aligned the approved cross-language data contracts, including Unicode
+  whitespace handling, finite numeric validation, JSON mapping boundaries, and
+  defensive null-member validation evidence.
+- Added direct regression evidence for null registry requests and null
+  bill-of-material members.
+
+### Changed
+
+- Bumped the monorepo, published module artifacts, runnable demo JARs, and
+  maintained demo-image references from `0.5.0` to `0.5.1`.
+
 ## [0.5.0] - 2026-07-14
 
 ### Changed
@@ -65,4 +80,5 @@ No unreleased changes.
 
 [0.4.0]: https://github.com/CIR4FUN-EU/dpp-sdk/releases/tag/v0.4.0
 [0.5.0]: https://github.com/CIR4FUN-EU/dpp-sdk/releases/tag/v0.5.0
+[0.5.1]: https://github.com/CIR4FUN-EU/dpp-sdk/releases/tag/v0.5.1
 [0.3.0]: https://github.com/CIR4FUN-EU/dpp-sdk/releases/tag/v0.3.0

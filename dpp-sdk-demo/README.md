@@ -88,7 +88,7 @@ Linux/macOS Bash:
 ./mvnw -f ./dpp-sdk-demo/pom.xml clean package
 ```
 
-The generated runnable artifacts are `dpp-sdk-demo/mock-dpp-repo/target/mock-dpp-repo-0.5.0-exec.jar`, `dpp-sdk-demo/mock-eu-registry/target/mock-eu-registry-0.5.0-exec.jar`, and `dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.0.jar`.
+The generated runnable artifacts are `dpp-sdk-demo/mock-dpp-repo/target/mock-dpp-repo-0.5.1-exec.jar`, `dpp-sdk-demo/mock-eu-registry/target/mock-eu-registry-0.5.1-exec.jar`, and `dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.1.jar`.
 
 ## Docker quick run
 
@@ -156,13 +156,13 @@ Start the repository in one terminal:
 PowerShell:
 
 ```powershell
-java -jar .\dpp-sdk-demo\mock-dpp-repo\target\mock-dpp-repo-0.5.0-exec.jar --dpp.repo.backend=memory --server.port=8080 --debug=false
+java -jar .\dpp-sdk-demo\mock-dpp-repo\target\mock-dpp-repo-0.5.1-exec.jar --dpp.repo.backend=memory --server.port=8080 --debug=false
 ```
 
 Linux/macOS Bash:
 
 ```bash
-java -jar ./dpp-sdk-demo/mock-dpp-repo/target/mock-dpp-repo-0.5.0-exec.jar --dpp.repo.backend=memory --server.port=8080 --debug=false
+java -jar ./dpp-sdk-demo/mock-dpp-repo/target/mock-dpp-repo-0.5.1-exec.jar --dpp.repo.backend=memory --server.port=8080 --debug=false
 ```
 
 Then start the registry in another terminal:
@@ -170,13 +170,13 @@ Then start the registry in another terminal:
 PowerShell:
 
 ```powershell
-java -jar .\dpp-sdk-demo\mock-eu-registry\target\mock-eu-registry-0.5.0-exec.jar --dpp.registry.backend=memory --server.port=8081 --demo.repo.public-base-url=http://localhost:8080 --demo.repo.verification-base-url=http://localhost:8080 --debug=false
+java -jar .\dpp-sdk-demo\mock-eu-registry\target\mock-eu-registry-0.5.1-exec.jar --dpp.registry.backend=memory --server.port=8081 --demo.repo.public-base-url=http://localhost:8080 --demo.repo.verification-base-url=http://localhost:8080 --debug=false
 ```
 
 Linux/macOS Bash:
 
 ```bash
-java -jar ./dpp-sdk-demo/mock-eu-registry/target/mock-eu-registry-0.5.0-exec.jar --dpp.registry.backend=memory --server.port=8081 --demo.repo.public-base-url=http://localhost:8080 --demo.repo.verification-base-url=http://localhost:8080 --debug=false
+java -jar ./dpp-sdk-demo/mock-eu-registry/target/mock-eu-registry-0.5.1-exec.jar --dpp.registry.backend=memory --server.port=8081 --demo.repo.public-base-url=http://localhost:8080 --demo.repo.verification-base-url=http://localhost:8080 --debug=false
 ```
 
 Success: `GET /health` at both addresses returns `UP`. Stop each service with `Ctrl+C` in its terminal.
@@ -208,13 +208,13 @@ docker compose -f ./dpp-sdk-demo/docker-compose.postgres.yml up -d dpp-repo-db d
 PowerShell:
 
 ```powershell
-java -jar .\dpp-sdk-demo\mock-dpp-repo\target\mock-dpp-repo-0.5.0-exec.jar --dpp.repo.backend=postgres --spring.datasource.url=jdbc:postgresql://localhost:5433/dpp_repo --spring.datasource.username=dpp_repo --spring.datasource.password=dpp_repo --server.port=8080 --debug=false
+java -jar .\dpp-sdk-demo\mock-dpp-repo\target\mock-dpp-repo-0.5.1-exec.jar --dpp.repo.backend=postgres --spring.datasource.url=jdbc:postgresql://localhost:5433/dpp_repo --spring.datasource.username=dpp_repo --spring.datasource.password=dpp_repo --server.port=8080 --debug=false
 ```
 
 Linux/macOS Bash:
 
 ```bash
-java -jar ./dpp-sdk-demo/mock-dpp-repo/target/mock-dpp-repo-0.5.0-exec.jar --dpp.repo.backend=postgres --spring.datasource.url=jdbc:postgresql://localhost:5433/dpp_repo --spring.datasource.username=dpp_repo --spring.datasource.password=dpp_repo --server.port=8080 --debug=false
+java -jar ./dpp-sdk-demo/mock-dpp-repo/target/mock-dpp-repo-0.5.1-exec.jar --dpp.repo.backend=postgres --spring.datasource.url=jdbc:postgresql://localhost:5433/dpp_repo --spring.datasource.username=dpp_repo --spring.datasource.password=dpp_repo --server.port=8080 --debug=false
 ```
 
 ### 3. Start the registry in another terminal
@@ -222,13 +222,13 @@ java -jar ./dpp-sdk-demo/mock-dpp-repo/target/mock-dpp-repo-0.5.0-exec.jar --dpp
 PowerShell:
 
 ```powershell
-java -jar .\dpp-sdk-demo\mock-eu-registry\target\mock-eu-registry-0.5.0-exec.jar --dpp.registry.backend=postgres --spring.datasource.url=jdbc:postgresql://localhost:5434/dpp_registry --spring.datasource.username=dpp_registry --spring.datasource.password=dpp_registry --server.port=8081 --demo.repo.public-base-url=http://localhost:8080 --demo.repo.verification-base-url=http://localhost:8080 --debug=false
+java -jar .\dpp-sdk-demo\mock-eu-registry\target\mock-eu-registry-0.5.1-exec.jar --dpp.registry.backend=postgres --spring.datasource.url=jdbc:postgresql://localhost:5434/dpp_registry --spring.datasource.username=dpp_registry --spring.datasource.password=dpp_registry --server.port=8081 --demo.repo.public-base-url=http://localhost:8080 --demo.repo.verification-base-url=http://localhost:8080 --debug=false
 ```
 
 Linux/macOS Bash:
 
 ```bash
-java -jar ./dpp-sdk-demo/mock-eu-registry/target/mock-eu-registry-0.5.0-exec.jar --dpp.registry.backend=postgres --spring.datasource.url=jdbc:postgresql://localhost:5434/dpp_registry --spring.datasource.username=dpp_registry --spring.datasource.password=dpp_registry --server.port=8081 --demo.repo.public-base-url=http://localhost:8080 --demo.repo.verification-base-url=http://localhost:8080 --debug=false
+java -jar ./dpp-sdk-demo/mock-eu-registry/target/mock-eu-registry-0.5.1-exec.jar --dpp.registry.backend=postgres --spring.datasource.url=jdbc:postgresql://localhost:5434/dpp_registry --spring.datasource.username=dpp_registry --spring.datasource.password=dpp_registry --server.port=8081 --demo.repo.public-base-url=http://localhost:8080 --demo.repo.verification-base-url=http://localhost:8080 --debug=false
 ```
 
 Success: both local health URLs return `UP`. Created database records remain
@@ -284,19 +284,19 @@ Optional positional URLs are `registryUrl` then `repoUrl`.
 PowerShell:
 
 ```powershell
-java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.0.jar sdk --debug=false
-java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.0.jar http --debug=false
-java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.0.jar all --debug=false
-java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.0.jar http http://localhost:8081 http://localhost:8080 --debug=false
+java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.1.jar sdk --debug=false
+java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.1.jar http --debug=false
+java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.1.jar all --debug=false
+java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.1.jar http http://localhost:8081 http://localhost:8080 --debug=false
 ```
 
 Linux/macOS Bash:
 
 ```bash
-java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.0.jar sdk --debug=false
-java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.0.jar http --debug=false
-java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.0.jar all --debug=false
-java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.0.jar http http://localhost:8081 http://localhost:8080 --debug=false
+java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.1.jar sdk --debug=false
+java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.1.jar http --debug=false
+java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.1.jar all --debug=false
+java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.1.jar http http://localhost:8081 http://localhost:8080 --debug=false
 ```
 
 Success for `sdk`: `SDK capability demo complete`. Success for HTTP modes: `HTTP services demo complete`; it creates, reads, updates, registers, exercises expected failures, and soft-deletes a DPP. The runner exits itself when complete.

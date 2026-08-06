@@ -7,7 +7,7 @@
     <parent>
         <groupId>dpp.client</groupId>
         <artifactId>dpp-sdk-clients</artifactId>
-        <version>0.5.0</version>
+        <version>0.5.1</version>
     </parent>
 
     <artifactId>dpp-registry-client</artifactId>

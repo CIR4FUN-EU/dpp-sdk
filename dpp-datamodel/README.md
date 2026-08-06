@@ -43,8 +43,8 @@ datamodel boundary.
 
 | Need | Dependency |
 | --- | --- |
-| Reusable DPP identity, metadata, nameplate, documentation, validation, payload DTOs, and core mappers | `dpp.datamodel:dpp-core:0.5.0` |
-| A furniture DPP aggregate (`Dpp4Fun`), furniture validation, furniture payload mapping, or JSON transport | `dpp.datamodel:dpp4fun:0.5.0` |
+| Reusable DPP identity, metadata, nameplate, documentation, validation, payload DTOs, and core mappers | `dpp.datamodel:dpp-core:0.5.1` |
+| A furniture DPP aggregate (`Dpp4Fun`), furniture validation, furniture payload mapping, or JSON transport | `dpp.datamodel:dpp4fun:0.5.1` |
 
 Choose the dependency that matches your use case. Applications using `dpp4fun` do not need to declare `dpp-core` separately because it is included transitively.
 
@@ -54,7 +54,7 @@ Choose the dependency that matches your use case. Applications using `dpp4fun` d
 <dependency>
     <groupId>dpp.datamodel</groupId>
     <artifactId>dpp-core</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </dependency>
 ```
 
@@ -64,7 +64,7 @@ Choose the dependency that matches your use case. Applications using `dpp4fun` d
 <dependency>
     <groupId>dpp.datamodel</groupId>
     <artifactId>dpp4fun</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </dependency>
 ```
 
@@ -311,5 +311,5 @@ Related modules:
 
 ## Aggregator POM
 
-The module aggregator is `dpp.datamodel:dpp-datamodel:0.5.0`. It has
+The module aggregator is `dpp.datamodel:dpp-datamodel:0.5.1`. It has
 `pom` packaging and is not a runtime library dependency.
