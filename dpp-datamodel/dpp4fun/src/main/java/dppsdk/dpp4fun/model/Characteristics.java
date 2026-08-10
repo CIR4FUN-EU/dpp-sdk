@@ -1,5 +1,7 @@
 package dppsdk.dpp4fun.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -179,23 +181,23 @@ public class Characteristics {
         }
 
         public Characteristics build() {
-            if (productName == null || productName.isBlank()) {
+            if (ContractText.isBlank(productName)) {
                 throw new IllegalArgumentException("productName is required");
             }
-            if (description != null && description.isBlank()) {
+            if (description != null && ContractText.isBlank(description)) {
                 throw new IllegalArgumentException("description must not be blank if provided");
             }
-            if (brand != null && brand.isBlank()) {
+            if (brand != null && ContractText.isBlank(brand)) {
                 throw new IllegalArgumentException("brand must not be blank if provided");
             }
-            if (productType != null && productType.isBlank()) {
+            if (productType != null && ContractText.isBlank(productType)) {
                 throw new IllegalArgumentException("productType must not be blank if provided");
             }
-            if (color != null && color.isBlank()) {
+            if (color != null && ContractText.isBlank(color)) {
                 throw new IllegalArgumentException("color must not be blank if provided");
             }
-            if (weight != null && weight < 0) {
-                throw new IllegalArgumentException("weight must be non-negative");
+            if (weight != null && (!Double.isFinite(weight) || weight < 0)) {
+                throw new IllegalArgumentException("weight must be finite and non-negative");
             }
             return new Characteristics(this);
         }

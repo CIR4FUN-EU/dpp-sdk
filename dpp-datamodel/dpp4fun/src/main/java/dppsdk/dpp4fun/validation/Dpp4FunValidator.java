@@ -4,6 +4,7 @@ import dppsdk.core.validation.DppCoreValidator;
 import dppsdk.core.validation.ValidationException;
 import dppsdk.core.validation.ValidationUtils;
 import dppsdk.core.validation.Validator;
+import dppsdk.core.util.ContractText;
 import dppsdk.dpp4fun.model.Dpp4Fun;
 
 /**
@@ -49,8 +50,8 @@ public class Dpp4FunValidator implements Validator<Dpp4Fun> {
         String category = dpp.getCategory();
         String productType = dpp.getProductType();
         if (ValidationUtils.hasText(category) && ValidationUtils.hasText(productType)) {
-            String catLower = category.trim().toLowerCase();
-            String typeLower = productType.trim().toLowerCase();
+            String catLower = ContractText.normalizeForComparison(category);
+            String typeLower = ContractText.normalizeForComparison(productType);
             if (!catLower.contains(typeLower) && !typeLower.contains(catLower)) {
                 throw new ValidationException(
                         "Cross-object validation: classification.category '" + category

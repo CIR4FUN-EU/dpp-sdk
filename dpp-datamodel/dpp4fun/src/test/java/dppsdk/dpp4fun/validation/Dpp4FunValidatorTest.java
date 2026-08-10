@@ -146,5 +146,27 @@ class Dpp4FunValidatorTest {
 
         assertDoesNotThrow(() -> validator.validate(dpp));
     }
+
+    @Test
+    void dec005_validatesClassificationBeforeCharacteristicsAndCrossRules() {
+        Dpp4Fun dpp = new Dpp4Fun.Builder()
+                .coreDpp(TestDataFactory.validDppCore())
+                .classification(new ProductClassification.Builder()
+                        .sector("Furniture")
+                        .category("Beds")
+                        .addTag("Chair")
+                        .addTag("chair")
+                        .build())
+                .characteristics(new Characteristics.Builder()
+                        .productName("A Chair")
+                        .productType("Table")
+                        .build())
+                .build();
+
+        ValidationException error =
+                assertThrows(ValidationException.class, () -> validator.validate(dpp));
+
+        assertTrue(error.getMessage().contains("duplicate entry"));
+    }
 }
 

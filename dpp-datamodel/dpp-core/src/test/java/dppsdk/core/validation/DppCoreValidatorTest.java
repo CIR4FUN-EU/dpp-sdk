@@ -1,11 +1,17 @@
 package dppsdk.core.validation;
 
 import dppsdk.core.model.DppCore;
+import dppsdk.core.model.Nameplate;
+import dppsdk.core.model.PassportMetadata;
 import dppsdk.core.support.CoreTestDataFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.time.LocalDate;
+import java.util.UUID;
 
 class DppCoreValidatorTest {
 
@@ -45,5 +51,21 @@ class DppCoreValidatorTest {
                 .build();
 
         assertDoesNotThrow(() -> validator.validate(core));
+    }
+
+    @Test
+    void dec005_validatesPassportMetadataBeforeNameplate() {
+        DppCore core = new DppCore.Builder()
+                .passportMetadata(new PassportMetadata.Builder()
+                        .uniqueProductIdentifier(UUID.randomUUID())
+                        .addPassportUpdateDate(LocalDate.now().plusDays(1))
+                        .build())
+                .nameplate(new Nameplate.Builder().gtinCode("GTIN-1").build())
+                .build();
+
+        ValidationException error =
+                assertThrows(ValidationException.class, () -> validator.validate(core));
+
+        assertTrue(error.getMessage().contains("passportUpdateDates[0]"));
     }
 }

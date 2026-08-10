@@ -1,5 +1,7 @@
 package dppsdk.core.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -73,10 +75,10 @@ public class Telephone {
         }
 
         public Telephone build() {
-            if (telephoneNumber == null || telephoneNumber.isBlank()) {
+            if (ContractText.isBlank(telephoneNumber)) {
                 throw new IllegalArgumentException("telephoneNumber is required");
             }
-            if (typeOfTelephone != null && typeOfTelephone.isBlank()) {
+            if (typeOfTelephone != null && ContractText.isBlank(typeOfTelephone)) {
                 throw new IllegalArgumentException("typeOfTelephone must not be blank if provided");
             }
             return new Telephone(this);

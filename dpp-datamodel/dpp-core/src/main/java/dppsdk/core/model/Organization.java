@@ -1,5 +1,7 @@
 package dppsdk.core.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -189,28 +191,28 @@ public class Organization {
         }
 
         public Organization build() {
-            if (name == null || name.isBlank()) {
+            if (ContractText.isBlank(name)) {
                 throw new IllegalArgumentException("Organization name is required");
             }
-            if (gln != null && gln.isBlank()) {
+            if (gln != null && ContractText.isBlank(gln)) {
                 throw new IllegalArgumentException("gln must not be blank if provided");
             }
-            if (productDescription != null && productDescription.isBlank()) {
+            if (productDescription != null && ContractText.isBlank(productDescription)) {
                 throw new IllegalArgumentException("productDescription must not be blank if provided");
             }
-            if (productDesignation != null && productDesignation.isBlank()) {
+            if (productDesignation != null && ContractText.isBlank(productDesignation)) {
                 throw new IllegalArgumentException("productDesignation must not be blank if provided");
             }
-            if (productFamily != null && productFamily.isBlank()) {
+            if (productFamily != null && ContractText.isBlank(productFamily)) {
                 throw new IllegalArgumentException("productFamily must not be blank if provided");
             }
-            if (productRoot != null && productRoot.isBlank()) {
+            if (productRoot != null && ContractText.isBlank(productRoot)) {
                 throw new IllegalArgumentException("productRoot must not be blank if provided");
             }
-            if (productOrderSuffix != null && productOrderSuffix.isBlank()) {
+            if (productOrderSuffix != null && ContractText.isBlank(productOrderSuffix)) {
                 throw new IllegalArgumentException("productOrderSuffix must not be blank if provided");
             }
-            if (uri != null && uri.isBlank()) {
+            if (uri != null && ContractText.isBlank(uri)) {
                 throw new IllegalArgumentException("uri must not be blank if provided");
             }
             return new Organization(this);

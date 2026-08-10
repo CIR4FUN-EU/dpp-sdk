@@ -1,5 +1,7 @@
 package dppsdk.core.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -102,7 +104,7 @@ public class Contact {
         }
 
         public Contact build() {
-            if (organization == null || organization.isBlank()) {
+            if (ContractText.isBlank(organization)) {
                 throw new IllegalArgumentException("organization is required");
             }
             return new Contact(this);

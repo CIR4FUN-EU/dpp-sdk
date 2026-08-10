@@ -1,6 +1,7 @@
 package dppsdk.dpp4fun.validation;
 
 import dppsdk.core.validation.ValidationException;
+import dppsdk.core.util.ContractText;
 import dppsdk.core.validation.Validator;
 import dppsdk.dpp4fun.model.BillOfMaterials;
 import dppsdk.dpp4fun.model.Material;
@@ -97,8 +98,8 @@ public class BillOfMaterialsValidator implements Validator<BillOfMaterials> {
      * Creates a composite key from name and reference for duplicate detection.
      */
     private String toKey(String name, String reference) {
-        String n = name != null ? name.trim().toLowerCase() : "";
-        String r = reference != null ? reference.trim().toLowerCase() : "";
+        String n = name != null ? ContractText.normalizeForComparison(name) : "";
+        String r = reference != null ? ContractText.normalizeForComparison(reference) : "";
         return n + "|" + r;
     }
 }

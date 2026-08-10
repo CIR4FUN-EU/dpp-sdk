@@ -87,7 +87,7 @@ PowerShell:
 ```powershell
 Invoke-WebRequest http://localhost:8080/health | Select-Object -ExpandProperty Content
 Invoke-WebRequest http://localhost:8081/health | Select-Object -ExpandProperty Content
-java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.0.jar http http://localhost:8081 http://localhost:8080 --debug=false
+java -jar .\dpp-sdk-demo\dpp-integration-demo\target\dpp-integration-demo-0.5.1.jar http http://localhost:8081 http://localhost:8080 --debug=false
 ```
 
 Linux/macOS Bash:
@@ -95,7 +95,7 @@ Linux/macOS Bash:
 ```bash
 curl --fail http://localhost:8080/health
 curl --fail http://localhost:8081/health
-java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.0.jar http http://localhost:8081 http://localhost:8080 --debug=false
+java -jar ./dpp-sdk-demo/dpp-integration-demo/target/dpp-integration-demo-0.5.1.jar http http://localhost:8081 http://localhost:8080 --debug=false
 ```
 
 Success signals are `status` `UP` from both health endpoints and `HTTP services demo complete` from the runner. The runner creates, reads, updates, registers, and deletes a demo DPP; registry registration verifies the active repository DPP internally.
@@ -163,16 +163,16 @@ For local JAR execution, default memory mode, local or mixed PostgreSQL modes, f
 
 ## Consumer artifacts
 
-All artifacts are version `0.5.0`. Build and install the relevant module locally before consuming it from another project.
+All artifacts are version `0.5.1`. Build and install the relevant module locally before consuming it from another project.
 
 | Need | Maven coordinate |
 | --- | --- |
-| Reusable DPP core | `dpp.datamodel:dpp-core:0.5.0` |
-| Furniture-specific DPP SDK | `dpp.datamodel:dpp4fun:0.5.0` |
-| Generic PostgreSQL support | `dpp.postgres:dpp-postgres-core:0.5.0` |
-| Dpp4Fun PostgreSQL repository | `dpp.postgres:dpp4fun-postgres:0.5.0` |
-| Repository payloads/client | `dpp.client:dpp-repo-payloads:0.5.0`, `dpp.client:dpp-repo-client:0.5.0` |
-| Registry payloads/client | `dpp.client:dpp-registry-payloads:0.5.0`, `dpp.client:dpp-registry-client:0.5.0` |
+| Reusable DPP core | `dpp.datamodel:dpp-core:0.5.1` |
+| Furniture-specific DPP SDK | `dpp.datamodel:dpp4fun:0.5.1` |
+| Generic PostgreSQL support | `dpp.postgres:dpp-postgres-core:0.5.1` |
+| Dpp4Fun PostgreSQL repository | `dpp.postgres:dpp4fun-postgres:0.5.1` |
+| Repository payloads/client | `dpp.client:dpp-repo-payloads:0.5.1`, `dpp.client:dpp-repo-client:0.5.1` |
+| Registry payloads/client | `dpp.client:dpp-registry-payloads:0.5.1`, `dpp.client:dpp-registry-client:0.5.1` |
 
 `dpp-sdk-demo` is runnable reference code, not a consumer library dependency.
 
