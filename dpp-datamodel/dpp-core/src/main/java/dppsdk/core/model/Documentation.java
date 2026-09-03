@@ -1,5 +1,7 @@
 package dppsdk.core.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -119,10 +121,10 @@ public class Documentation {
             if (availableForYears != null && availableForYears < 0) {
                 throw new IllegalArgumentException("availableForYears must be non-negative");
             }
-            if (digitalInstructionsLink != null && digitalInstructionsLink.isBlank()) {
+            if (digitalInstructionsLink != null && ContractText.isBlank(digitalInstructionsLink)) {
                 throw new IllegalArgumentException("digitalInstructionsLink must not be blank if provided");
             }
-            if (safetyInstructionsLink != null && safetyInstructionsLink.isBlank()) {
+            if (safetyInstructionsLink != null && ContractText.isBlank(safetyInstructionsLink)) {
                 throw new IllegalArgumentException("safetyInstructionsLink must not be blank if provided");
             }
             return new Documentation(this);

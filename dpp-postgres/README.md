@@ -40,8 +40,8 @@ Semantic validation remains in `dpp-datamodel`. `Dpp4FunPostgresRepository` expe
 
 | Module | Coordinates | Responsibility |
 | --- | --- | --- |
-| `dpp-postgres-core` | `dpp.postgres:dpp-postgres-core:0.5.0` | Reusable PostgreSQL schema/bootstrap support, core mapping, passport/version support, lifecycle events, and pages |
-| `dpp4fun-postgres` | `dpp.postgres:dpp4fun-postgres:0.5.0` | `Dpp4Fun` mapping, `Dpp4FunPostgresRepository`, history, batch lookup, and search projections |
+| `dpp-postgres-core` | `dpp.postgres:dpp-postgres-core:0.5.1` | Reusable PostgreSQL schema/bootstrap support, core mapping, passport/version support, lifecycle events, and pages |
+| `dpp4fun-postgres` | `dpp.postgres:dpp4fun-postgres:0.5.1` | `Dpp4Fun` mapping, `Dpp4FunPostgresRepository`, history, batch lookup, and search projections |
 
 ## Maven dependencies
 
@@ -51,7 +51,7 @@ Use `dpp-postgres-core` only when an application needs those reusable PostgreSQL
 <dependency>
     <groupId>dpp.postgres</groupId>
     <artifactId>dpp-postgres-core</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </dependency>
 ```
 
@@ -61,7 +61,7 @@ Use `dpp4fun-postgres` for the complete furniture repository; it already depends
 <dependency>
     <groupId>dpp.postgres</groupId>
     <artifactId>dpp4fun-postgres</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </dependency>
 ```
 
@@ -300,7 +300,7 @@ Linux/macOS Bash:
 
 ## Aggregator POM
 
-The module aggregator is `dpp.postgres:dpp-postgres:0.5.0`. It uses `pom`
+The module aggregator is `dpp.postgres:dpp-postgres:0.5.1`. It uses `pom`
 packaging and is not itself a runtime dependency.
 
 ## Related documentation

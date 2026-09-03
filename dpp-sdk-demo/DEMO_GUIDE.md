@@ -15,7 +15,7 @@ the demo README uses root-relative Compose, JAR, and Maven-wrapper paths.
 - Decide whether to demonstrate `sdk`, `http`, or `all`; use `all` for a complete walkthrough.
 
 The runner modes are passed as the first argument to
-`dpp-integration-demo-0.5.0.jar`; use the exact command from the [demo README](README.md).
+`dpp-integration-demo-0.5.1.jar`; use the exact command from the [demo README](README.md).
 
 ## What to open
 

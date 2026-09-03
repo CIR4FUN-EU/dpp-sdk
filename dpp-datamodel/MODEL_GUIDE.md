@@ -152,37 +152,37 @@ Dpp (abstract)
 
 - Fields: required `coreDpp`, required `classification`, required `characteristics`, optional `billOfMaterials`.
 - Builder checks: all three required fields are non-null.
-- `Dpp4FunValidator`: validates the core, classification, characteristics, and optional bill of materials. When both category and product type have text, either one must contain the other after trimming and lowercasing. A non-blank external documentation link requires a documentation object.
+- `Dpp4FunValidator`: validates core, classification, characteristics, optional bill of materials, then cross-object rules. Comparison trims the frozen cross-language whitespace table and lowercases with `Locale.ROOT`. A non-blank external documentation link requires a documentation object. Reflection-created arbitrary corruption is outside the supported public validator boundary.
 
 ### `ProductClassification`
 
 - Fields: required `sector` and `category`; optional `group`, optional `subCategory`, and `tags` list.
 - Builder checks: sector and category are required; supplied group and subcategory cannot be blank. `addTag` appends to the list and `removeTag` removes a value.
-- `ProductClassificationValidator`: sector and category are required; supplied group/subcategory cannot be blank; non-blank subcategory requires a non-blank category and non-blank group requires a non-blank sector. Tags, when non-empty, cannot contain null, blank, or duplicate values after trim/lowercase comparison.
+- `ProductClassificationValidator`: sector and category are required; supplied group/subcategory cannot be blank; non-blank subcategory requires a non-blank category and non-blank group requires a non-blank sector. Tags cannot contain null, blank, or duplicate values after frozen-table trim and locale-independent lowercase comparison. Codec mapping rejects null members before returning a domain model.
 
 ### `Characteristics`
 
 - Fields: required `productName`; optional `description`, `brand`, `productType`, `dimensions`, `weight`, `color`; and `features` list.
-- Builder checks: product name is required; supplied description, brand, product type, and color cannot be blank; weight cannot be negative. `addFeature` and `removeFeature` edit the builder list.
-- `CharacteristicsValidator`: product name is required; supplied weight must be non-negative; validates present dimensions. Features, when non-empty, cannot contain null, blank, or duplicate values after trim/lowercase comparison.
+- Builder checks: product name is required; supplied description, brand, product type, and color cannot be blank; weight must be finite and non-negative. `addFeature` and `removeFeature` edit the builder list.
+- `CharacteristicsValidator`: product name is required; supplied weight must be finite and non-negative; validates present dimensions. Features cannot contain null, blank, or duplicate values after frozen-table trim and locale-independent lowercase comparison. Codec mapping rejects null members before returning a domain model.
 
 ### `Dimensions`
 
 - Fields: `width`, `height`, `depth` (`Double`), and optional `unit`.
-- Builder checks: all three measurements are required and non-negative; a supplied unit cannot be blank.
-- `DimensionsValidator`: optional as a nested value; checks non-negative measurements, requires at least one measurement, and requires a non-blank unit when a measurement is present. The builder’s stricter checks mean normally constructed instances have all three measurements, while the validator also protects values obtained through mapping.
+- Builder checks: all three measurements are required, finite, and non-negative; a supplied unit cannot be blank.
+- `DimensionsValidator`: optional as a nested value; checks finite non-negative measurements, requires at least one measurement, and requires a non-blank unit when a measurement is present. The builder’s stricter checks mean normally constructed instances have all three measurements, while the validator retains narrow defensive leaf checks.
 
 ### `BillOfMaterials`
 
 - Fields: `materials`, `components`, and `parts` lists. A builder starts with empty lists; `add*`/`remove*` methods edit each list.
 - Builder checks: none; lists are defensively copied.
-- `BillOfMaterialsValidator`: optional as a nested value. Each list cannot contain null entries; each item is validated; duplicates within a list are rejected using a trimmed, lowercased `name|reference` key.
+- `BillOfMaterialsValidator`: optional as a nested value. Each list cannot contain null entries; each item is validated; duplicates within a list are rejected using a frozen-table-trimmed, `Locale.ROOT`-lowercased `name|reference` key.
 
 ### `Material`
 
 - Fields: required `name`, `mandatory` (boolean), required `portion` (`double`), optional `reference`.
-- Builder checks: name is required; portion cannot be negative; supplied reference cannot be blank.
-- `MaterialValidator`: name is required, portion must be non-negative, supplied reference cannot be blank, and a mandatory material must have a portion greater than zero.
+- Builder checks: name is required; portion must be finite and non-negative; supplied reference cannot be blank.
+- `MaterialValidator`: name is required, portion must be finite and non-negative, supplied reference cannot be blank, and a mandatory material must have a portion greater than zero.
 
 ### `Component`
 

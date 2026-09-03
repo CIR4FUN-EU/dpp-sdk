@@ -1,6 +1,7 @@
 package dppsdk.core.validation;
 
-import java.util.Collection;
+import dppsdk.core.util.ContractText;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ public final class ValidationUtils {
      * Returns true if the string is non-null and not blank.
      */
     public static boolean hasText(String value) {
-        return value != null && !value.trim().isEmpty();
+        return value != null && !ContractText.isBlank(value);
     }
 
     /**
@@ -44,7 +45,7 @@ public final class ValidationUtils {
      * @throws ValidationException if value is null or blank
      */
     public static void requireNotBlank(String value, String fieldName) throws ValidationException {
-        if (value == null || value.trim().isEmpty()) {
+        if (ContractText.isBlank(value)) {
             throw new ValidationException(fieldName + " must not be blank");
         }
     }
@@ -70,8 +71,8 @@ public final class ValidationUtils {
      * @throws ValidationException if value is negative
      */
     public static void requireNonNegative(double value, String fieldName) throws ValidationException {
-        if (value < 0) {
-            throw new ValidationException(fieldName + " must be non-negative, but got " + value);
+        if (!Double.isFinite(value) || value < 0) {
+            throw new ValidationException(fieldName + " must be finite and non-negative, but got " + value);
         }
     }
 
@@ -83,8 +84,8 @@ public final class ValidationUtils {
      * @throws ValidationException if value is negative
      */
     public static void requireNonNegativeIfPresent(Double value, String fieldName) throws ValidationException {
-        if (value != null && value < 0) {
-            throw new ValidationException(fieldName + " must be non-negative, but got " + value);
+        if (value != null && (!Double.isFinite(value) || value < 0)) {
+            throw new ValidationException(fieldName + " must be finite and non-negative, but got " + value);
         }
     }
 
@@ -118,11 +119,12 @@ public final class ValidationUtils {
             if (item == null) {
                 throw new ValidationException(listName + "[" + i + "] must not be null");
             }
-            if (item.trim().isEmpty()) {
+            if (ContractText.isBlank(item)) {
                 throw new ValidationException(listName + "[" + i + "] must not be blank");
             }
-            if (!seen.add(item.trim().toLowerCase())) {
-                throw new ValidationException(listName + " contains duplicate entry: '" + item.trim() + "'");
+            String normalized = ContractText.normalizeForComparison(item);
+            if (!seen.add(normalized)) {
+                throw new ValidationException(listName + " contains duplicate entry: '" + ContractText.strip(item) + "'");
             }
         }
     }

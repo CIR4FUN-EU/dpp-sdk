@@ -42,12 +42,12 @@ they do not contain concrete DPP models, persistence, or service logic.
 
 | Need | Artifact |
 | --- | --- |
-| Repository response/request DTOs only | `dpp.client:dpp-repo-payloads:0.5.0` |
-| Generic repository lifecycle and fine-granular HTTP client | `dpp.client:dpp-repo-client:0.5.0` |
-| Registry registration DTOs only | `dpp.client:dpp-registry-payloads:0.5.0` |
-| Registry registration HTTP client | `dpp.client:dpp-registry-client:0.5.0` |
+| Repository response/request DTOs only | `dpp.client:dpp-repo-payloads:0.5.1` |
+| Generic repository lifecycle and fine-granular HTTP client | `dpp.client:dpp-repo-client:0.5.1` |
+| Registry registration DTOs only | `dpp.client:dpp-registry-payloads:0.5.1` |
+| Registry registration HTTP client | `dpp.client:dpp-registry-client:0.5.1` |
 
-The parent is `dpp.client:dpp-sdk-clients:0.5.0` with `pom` packaging. Client artifacts depend on their matching payload artifact; they do not provide a concrete DPP model, codec, or validator.
+The parent is `dpp.client:dpp-sdk-clients:0.5.1` with `pom` packaging. Client artifacts depend on their matching payload artifact; they do not provide a concrete DPP model, codec, or validator.
 
 ## Maven dependencies
 
@@ -59,13 +59,13 @@ separately.
 <dependency>
     <groupId>dpp.client</groupId>
     <artifactId>dpp-repo-client</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </dependency>
 
 <dependency>
     <groupId>dpp.client</groupId>
     <artifactId>dpp-registry-client</artifactId>
-    <version>0.5.0</version>
+    <version>0.5.1</version>
 </dependency>
 ```
 

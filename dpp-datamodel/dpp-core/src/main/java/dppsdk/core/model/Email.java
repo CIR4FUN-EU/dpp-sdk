@@ -1,5 +1,7 @@
 package dppsdk.core.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -73,10 +75,10 @@ public class Email {
         }
 
         public Email build() {
-            if (emailAddress == null || emailAddress.isBlank()) {
+            if (ContractText.isBlank(emailAddress)) {
                 throw new IllegalArgumentException("emailAddress is required");
             }
-            if (typeOfEmail != null && typeOfEmail.isBlank()) {
+            if (typeOfEmail != null && ContractText.isBlank(typeOfEmail)) {
                 throw new IllegalArgumentException("typeOfEmail must not be blank if provided");
             }
             return new Email(this);

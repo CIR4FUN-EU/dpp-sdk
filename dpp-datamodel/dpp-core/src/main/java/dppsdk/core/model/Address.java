@@ -1,5 +1,7 @@
 package dppsdk.core.model;
 
+import dppsdk.core.util.ContractText;
+
 import java.util.Objects;
 
 /**
@@ -117,19 +119,19 @@ public class Address {
         }
 
         public Address build() {
-            if (country == null || country.isBlank()) {
+            if (ContractText.isBlank(country)) {
                 throw new IllegalArgumentException("country is required");
             }
-            if (town == null || town.isBlank()) {
+            if (ContractText.isBlank(town)) {
                 throw new IllegalArgumentException("town is required");
             }
-            if (zipCode != null && zipCode.isBlank()) {
+            if (zipCode != null && ContractText.isBlank(zipCode)) {
                 throw new IllegalArgumentException("zipCode must not be blank if provided");
             }
-            if (region != null && region.isBlank()) {
+            if (region != null && ContractText.isBlank(region)) {
                 throw new IllegalArgumentException("region must not be blank if provided");
             }
-            if (street != null && street.isBlank()) {
+            if (street != null && ContractText.isBlank(street)) {
                 throw new IllegalArgumentException("street must not be blank if provided");
             }
             return new Address(this);

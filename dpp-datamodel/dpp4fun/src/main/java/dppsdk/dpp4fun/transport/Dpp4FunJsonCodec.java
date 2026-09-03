@@ -6,7 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dppsdk.dpp4fun.mapper.Dpp4FunMapper;
+import dppsdk.dpp4fun.model.Characteristics;
+import dppsdk.dpp4fun.model.Dimensions;
 import dppsdk.dpp4fun.model.Dpp4Fun;
+import dppsdk.dpp4fun.model.Material;
 import dppsdk.dpp4fun.payload.Dpp4FunPayload;
 import dppsdk.dpp4fun.validation.Dpp4FunValidationService;
 
@@ -38,10 +41,13 @@ public class Dpp4FunJsonCodec {
 
     public String toJson(Dpp4Fun dpp) {
         try {
+            requireFiniteNumbers(dpp);
             ObjectNode json = objectMapper.valueToTree(dppMapper.toPayload(dpp));
             flattenCoreDppForTransport(json);
             return objectMapper.writeValueAsString(json);
         } catch (JsonProcessingException e) {
+            throw new IllegalArgumentException("Failed to serialize DPP to JSON", e);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Failed to serialize DPP to JSON", e);
         }
     }
@@ -49,9 +55,12 @@ public class Dpp4FunJsonCodec {
     public Dpp4Fun fromJson(String json) {
         try {
             JsonNode tree = objectMapper.readTree(json);
-            if (tree instanceof ObjectNode objectNode) {
-                normalizeTransportShape(objectNode);
+            if (!(tree instanceof ObjectNode objectNode)) {
+                throw new IllegalArgumentException(
+                        "Failed to deserialize DPP JSON",
+                        new IllegalArgumentException("$ must be a JSON object"));
             }
+            normalizeTransportShape(objectNode);
             Dpp4FunPayload payload =
                     objectMapper.treeToValue(tree, Dpp4FunPayload.class);
             return dppMapper.toDomain(payload);
@@ -112,6 +121,31 @@ public class Dpp4FunJsonCodec {
         JsonNode value = source.remove(fieldName);
         if (value != null) {
             target.set(fieldName, value);
+        }
+    }
+
+    private static void requireFiniteNumbers(Dpp4Fun dpp) {
+        Characteristics characteristics = dpp.getCharacteristics();
+        requireFinite(characteristics.getWeight(), "Characteristics.weight");
+        Dimensions dimensions = characteristics.getDimensions();
+        if (dimensions != null) {
+            requireFinite(dimensions.getWidth(), "Dimensions.width");
+            requireFinite(dimensions.getHeight(), "Dimensions.height");
+            requireFinite(dimensions.getDepth(), "Dimensions.depth");
+        }
+        if (dpp.getBillOfMaterials() != null) {
+            for (int index = 0; index < dpp.getBillOfMaterials().getMaterials().size(); index++) {
+                Material material = dpp.getBillOfMaterials().getMaterials().get(index);
+                requireFinite(
+                        material.getPortion(),
+                        "BillOfMaterials.materials[" + index + "].portion");
+            }
+        }
+    }
+
+    private static void requireFinite(Double value, String fieldName) {
+        if (value != null && !Double.isFinite(value)) {
+            throw new IllegalArgumentException(fieldName + " must be finite");
         }
     }
 }
